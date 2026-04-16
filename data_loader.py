@@ -328,7 +328,7 @@ Rental Housing:
             "content": """Syracuse Parks and Recreation:
 
 Contact: (315) 473-4330
-Website: syracuse.ny.gov/departments/parks-recreation
+Website: https://www.syracuse.ny.gov/departments/parks-recreation
 
 Parks: Syracuse has 70+ parks and green spaces
 - Burnet Park: Zoo, golf course, tennis
