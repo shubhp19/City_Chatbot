@@ -116,10 +116,61 @@ class SyracuseCityChatbot:
 
         print("Connecting to ChromaDB...")
         db = chromadb.PersistentClient(path=CHROMA_DB_PATH)
-        self.collection = db.get_collection(COLLECTION_NAME)
+        try:
+            self.collection = db.get_collection(COLLECTION_NAME)
+        except Exception:
+            print("Collection not found — building knowledge base from scratch...")
+            self._build_db(db)
+            self.collection = db.get_collection(COLLECTION_NAME)
         print(f"✅ Ready [{self.role.upper()} mode] — {self.collection.count()} chunks loaded.")
 
         self.history = []
+
+    def _build_db(self, db):
+        """Download city data and build ChromaDB collection from scratch."""
+        import re
+        from data_loader import load_all
+
+        print("Downloading Syracuse city data...")
+        documents = load_all()
+
+        collection = db.create_collection(
+            name=COLLECTION_NAME,
+            metadata={"hnsw:space": "cosine"}
+        )
+
+        CHUNK_SIZE, CHUNK_OVERLAP, BATCH = 600, 120, 128
+        all_docs, all_ids, all_metas = [], [], []
+
+        for i, doc in enumerate(documents):
+            title    = doc.get("title", "")
+            content  = doc.get("content", "")
+            category = doc.get("category", "")
+            source   = doc.get("source", "")
+            full     = f"Title: {title}\nCategory: {category}\nSource: {source}\n\n{content}"
+            full     = re.sub(r'\n{3,}', '\n\n', full).strip()
+
+            start = 0
+            j = 0
+            while start < len(full):
+                chunk = full[start:start + CHUNK_SIZE].strip()
+                if len(chunk) > 60:
+                    all_docs.append(chunk)
+                    all_ids.append(f"doc_{i}_chunk_{j}")
+                    all_metas.append({"title": title, "category": category,
+                                      "source": source, "chunk_index": j})
+                    j += 1
+                start += CHUNK_SIZE - CHUNK_OVERLAP
+
+        print(f"Embedding {len(all_docs)} chunks...")
+        for i in range(0, len(all_docs), BATCH):
+            b_docs  = all_docs[i:i+BATCH]
+            b_ids   = all_ids[i:i+BATCH]
+            b_metas = all_metas[i:i+BATCH]
+            embeds  = self.embedder.encode(b_docs, show_progress_bar=False).tolist()
+            collection.add(documents=b_docs, embeddings=embeds,
+                           ids=b_ids, metadatas=b_metas)
+        print(f"✅ Knowledge base built — {len(all_docs)} chunks stored.")
 
     @property
     def system_prompt(self):
