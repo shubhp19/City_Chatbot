@@ -83,11 +83,6 @@ def show_login():
         st.divider()
 
         api_key = os.environ.get("GROQ_API_KEY", "")
-        if not api_key:
-            st.markdown("##### 🔑 Groq API Key")
-            st.caption("Free at [console.groq.com](https://console.groq.com)")
-            api_key = st.text_input("", type="password",
-                                     placeholder="gsk_...", label_visibility="collapsed")
 
         st.markdown("##### 👤 Who are you?")
         col1, col2 = st.columns(2)
@@ -96,17 +91,15 @@ def show_login():
         with col2:
             off_btn = st.button("🏛️ City Official", use_container_width=True)
 
-        if res_btn and api_key:
+        if res_btn:
             st.session_state.api_key  = api_key
             st.session_state.role     = "resident"
             st.rerun()
-        elif off_btn and api_key:
+        elif off_btn:
             st.session_state.api_key  = api_key
             st.session_state.role     = "official"
             st.session_state.needs_name = True
             st.rerun()
-        elif (res_btn or off_btn) and not api_key:
-            st.error("Please enter your Groq API key first.")
 
         st.divider()
         col1, col2 = st.columns(2)
