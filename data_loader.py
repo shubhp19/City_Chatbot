@@ -79,12 +79,12 @@ DATASETS = {
 # Also scrape key city web pages for context
 WEB_PAGES = [
     {"url": "https://data.syr.gov/", "title": "Syracuse Open Data Portal"},
-    {"url": "https://www.syracuse.ny.gov/", "title": "City of Syracuse Official Website"},
-    {"url": "https://www.syracuse.ny.gov/departments/", "title": "City Departments"},
-    {"url": "https://www.syracuse.ny.gov/residents/", "title": "Resident Services"},
-    {"url": "https://www.syracuse.ny.gov/housing/", "title": "Housing Services"},
-    {"url": "https://www.syracuse.ny.gov/departments/parks-recreation/", "title": "Parks and Recreation"},
-    {"url": "https://www.syracuse.ny.gov/departments/code-enforcement/", "title": "Code Enforcement"},
+    {"url": "https://www.syracuse.gov/", "title": "City of Syracuse Official Website"},
+    {"url": "https://www.syracuse.gov/departments/", "title": "City Departments"},
+    {"url": "https://www.syracuse.gov/residents/", "title": "Resident Services"},
+    {"url": "https://www.syracuse.gov/housing/", "title": "Housing Services"},
+    {"url": "https://www.syracuse.gov/departments/parks-recreation/", "title": "Parks and Recreation"},
+    {"url": "https://www.syracuse.gov/departments/code-enforcement/", "title": "Code Enforcement"},
 ]
 
 
@@ -264,7 +264,7 @@ Neighborhood Organizations:
 - Near Westside Initiative
 - Syracuse United Neighbors""",
             "category": "City Services",
-            "source": "https://www.syracuse.ny.gov",
+            "source": "https://www.syracuse.gov",
             "doc_type": "static"
         },
         {
@@ -290,7 +290,7 @@ Key Community Resources by Area:
 - Libraries: Onondaga County Public Library system (ocpl.org)
 - Schools: Syracuse City School District (scsd.us)""",
             "category": "Demographics",
-            "source": "https://www.syracuse.ny.gov",
+            "source": "https://www.syracuse.gov",
             "doc_type": "static"
         },
         {
@@ -320,7 +320,7 @@ Rental Housing:
 - Tenants can report violations without fear of retaliation
 - Legal Aid Society provides free tenant legal assistance: (315) 475-3127""",
             "category": "Housing & Health",
-            "source": "https://www.syracuse.ny.gov/housing",
+            "source": "https://www.syracuse.gov/housing",
             "doc_type": "static"
         },
         {
@@ -328,7 +328,7 @@ Rental Housing:
             "content": """Syracuse Parks and Recreation:
 
 Contact: (315) 473-4330
-Website: https://www.syracuse.ny.gov/departments/parks-recreation
+Website: https://www.syracuse.gov/departments/parks-recreation
 
 Parks: Syracuse has 70+ parks and green spaces
 - Burnet Park: Zoo, golf course, tennis
@@ -352,7 +352,7 @@ Programs offered:
 Registration: Visit parks department or call for program registration
 Free programs: Many programs are free or low-cost for Syracuse residents""",
             "category": "Recreation",
-            "source": "https://www.syracuse.ny.gov/departments/parks-recreation",
+            "source": "https://www.syracuse.gov/departments/parks-recreation",
             "doc_type": "static"
         }
     ]
