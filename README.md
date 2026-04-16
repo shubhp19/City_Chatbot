@@ -1,6 +1,11 @@
 # 🏙️ Syracuse City Chatbot
 ### OPT Project — Syracuse Open Data Civic AI
 
+**Student:** Shubham Shekhar Patil  
+**Email:** shubhamshekharpatil@gmail.com  
+**Faculty Sponsors:** Jeffrey Saltz; Ingrid Erickson  
+**Reporting Tool:** Qualtrics (OPT bi-monthly reporting)
+
 > An AI-powered chatbot for Syracuse residents and city officials, built on real open data from [data.syr.gov](https://data.syr.gov) using RAG + Groq LLaMA 3.3.
 
 ---
