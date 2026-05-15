@@ -1,6 +1,6 @@
 """
 Syracuse City Open Data Chatbot
-Research Task 09 — Civic AI Project
+Syracuse City AI Assistant
 Streamlit UI with Resident and City Official modes
 """
 
@@ -76,7 +76,7 @@ def show_login():
         st.markdown("""
         <div class="city-header">
             <h1>🏙️ Syracuse City Assistant</h1>
-            <p>Powered by Syracuse Open Data · data.syr.gov · Built for Research Task 09</p>
+            <p>Powered by Syracuse Open Data · data.syr.gov</p>
         </div>
         """, unsafe_allow_html=True)
 
