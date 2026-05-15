@@ -3,6 +3,6 @@ beautifulsoup4
 pandas
 sentence-transformers
 chromadb
-google-genai
+groq
 streamlit
 python-dotenv

@@ -1,12 +1,11 @@
 """
 Syracuse City Chatbot Engine
-Google Gemini API + ChromaDB RAG
+Groq API + ChromaDB RAG
 Roles: Resident and City Official
 """
 
 import chromadb
-from google import genai
-from google.genai import types
+from groq import Groq
 from sentence_transformers import SentenceTransformer
 import json
 import os
@@ -15,7 +14,7 @@ from datetime import datetime
 CHROMA_DB_PATH  = "./chroma_db"
 COLLECTION_NAME = "syracuse_city"
 EMBED_MODEL     = "all-MiniLM-L6-v2"
-GEMINI_MODEL    = "gemini-2.0-flash"
+GROQ_MODEL      = "llama-3.3-70b-versatile"
 TOP_K           = 6
 ANNOUNCEMENTS_FILE = "announcements.json"
 
@@ -109,7 +108,7 @@ class AnnouncementManager:
 class SyracuseCityChatbot:
     def __init__(self, api_key: str, role: str = "resident"):
         self.role = role.lower()
-        self.client = genai.Client(api_key=api_key)
+        self.client = Groq(api_key=api_key)
         self.announcements = AnnouncementManager()
 
         print("Loading embedding model...")
@@ -230,27 +229,17 @@ Question: {user_message}
 Answer based on the context above."""
 
         try:
-            history_genai = []
-            for msg in self.history[-8:]:
-                role = "user" if msg["role"] == "user" else "model"
-                history_genai.append(types.Content(
-                    role=role,
-                    parts=[types.Part(text=msg["content"])]
-                ))
+            messages = [{"role": "system", "content": self.system_prompt}]
+            messages += self.history[-8:]
+            messages.append({"role": "user", "content": augmented})
 
-            full_prompt = f"{self.system_prompt}\n\n{augmented}"
-            response = self.client.models.generate_content(
-                model=GEMINI_MODEL,
-                contents=history_genai + [types.Content(
-                    role="user",
-                    parts=[types.Part(text=full_prompt)]
-                )],
-                config=types.GenerateContentConfig(
-                    temperature=0.3,
-                    max_output_tokens=1024,
-                )
+            response = self.client.chat.completions.create(
+                model=GROQ_MODEL,
+                messages=messages,
+                temperature=0.3,
+                max_tokens=1024
             )
-            answer = response.text
+            answer = response.choices[0].message.content
         except Exception as e:
             answer = f"❌ Error: {e}"
 
