@@ -15,8 +15,8 @@ except Exception:
     pass
 
 try:
-    if hasattr(st, "secrets") and "GROQ_API_KEY" in st.secrets:
-        os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+    if hasattr(st, "secrets") and "GOOGLE_API_KEY" in st.secrets:
+        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 except Exception:
     pass
 
@@ -82,7 +82,7 @@ def show_login():
 
         st.divider()
 
-        api_key = os.environ.get("GROQ_API_KEY", "")
+        api_key = os.environ.get("GOOGLE_API_KEY", "")
 
         st.markdown("##### 👤 Who are you?")
         col1, col2 = st.columns(2)
