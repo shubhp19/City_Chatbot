@@ -241,7 +241,7 @@ Answer based on the context above."""
             )
             answer = response.choices[0].message.content
         except Exception as e:
-            answer = f"❌ Error: {e}"
+            answer = f"❌ Error ({type(e).__name__}): {e}"
 
         self.history.append({"role": "user",      "content": user_message})
         self.history.append({"role": "assistant",  "content": answer})
